@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Task | Task Management System</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <h2><i class="fa-solid fa-list-check"></i> Task Manager</h2>
+
+        <ul>
+
+            <li>
+                <a href="/dashboard">
+                    <i class="fa-solid fa-house"></i>
+                    Dashboard
+                </a>
+            </li>
+
+            <li>
+                <a href="/add">
+                    <i class="fa-solid fa-plus"></i>
+                    Add Task
+                </a>
+            </li>
+
+            <li>
+                <a href="/logout">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    Logout
+                </a>
+            </li>
+
+        </ul>
+
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <div class="topbar">
+            <h1>Edit Task</h1>
+        </div>
+
+        <div class="form-container">
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form action="/edit/{{ task[0] }}" method="POST">
+
+                <!-- Task Title -->
+                <div class="form-group">
+
+                    <label>
+                        <i class="fa-solid fa-heading"></i>
+                        Task Title
+                    </label>
+
+                    <input
+                        type="text"
+                        name="title"
+                        value="{{ task[1] }}"
+                        required>
+
+                </div>
+
+                <!-- Description -->
+                <div class="form-group">
+
+                    <label>
+                        <i class="fa-solid fa-align-left"></i>
+                        Description
+                    </label>
+
+                    <textarea
+                        name="description"
+                        rows="5"
+                        required>{{ task[2] }}</textarea>
+
+                </div>
+
+                <!-- Priority -->
+                <div class="form-group">
+
+                    <label>
+                        <i class="fa-solid fa-flag"></i>
+                        Priority
+                    </label>
+
+                    <select name="priority">
+
+                        <option value="Low"
+                        {% if task[3]=='Low' %}selected{% endif %}>
+                            Low
+                        </option>
+
+                        <option value="Medium"
+                        {% if task[3]=='Medium' %}selected{% endif %}>
+                            Medium
+                        </option>
+
+                        <option value="High"
+                        {% if task[3]=='High' %}selected{% endif %}>
+                            High
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- Status -->
+                <div class="form-group">
+
+                    <label>
+                        <i class="fa-solid fa-spinner"></i>
+                        Status
+                    </label>
+
+                    <select name="status">
+
+                        <option value="Pending"
+                        {% if task[4]=='Pending' %}selected{% endif %}>
+                            Pending
+                        </option>
+
+                        <option value="In Progress"
+                        {% if task[4]=='In Progress' %}selected{% endif %}>
+                            In Progress
+                        </option>
+
+                        <option value="Completed"
+                        {% if task[4]=='Completed' %}selected{% endif %}>
+                            Completed
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- Due Date -->
+                <div class="form-group">
+
+                    <label>
+                        <i class="fa-solid fa-calendar"></i>
+                        Due Date
+                    </label>
+
+                    <input
+                        type="date"
+                        name="due_date"
+                        value="{{ task[5] }}"
+                        required>
+
+                </div>
+
+                <!-- Buttons -->
+                <div class="button-group">
+
+                    <button type="submit" class="btn">
+                        <i class="fa-solid fa-pen"></i>
+                        Update Task
+                    </button>
+
+                    <a href="/dashboard" class="cancel-btn">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        Cancel
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </main>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+</html>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Task Management System</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <h2><i class="fa-solid fa-list-check"></i> Task Manager</h2>
+
+        <ul>
+
+            <li>
+                <a href="/dashboard" class="active">
+                    <i class="fa-solid fa-house"></i>
+                    Dashboard
+                </a>
+            </li>
+
+            <li>
+                <a href="/add">
+                    <i class="fa-solid fa-plus"></i>
+                    Add Task
+                </a>
+            </li>
+
+            <li>
+                <a href="/logout">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    Logout
+                </a>
+            </li>
+
+        </ul>
+
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <div class="topbar">
+
+            <h1>
+                Welcome,
+                {{ username }}
+            </h1>
+
+        </div>
+
+        <!-- Dashboard Cards -->
+        <div class="cards">
+
+            <div class="card blue">
+                <i class="fa-solid fa-list-check"></i>
+
+                <h2>{{ total_tasks }}</h2>
+
+                <p>Total Tasks</p>
+            </div>
+
+            <div class="card green">
+                <i class="fa-solid fa-circle-check"></i>
+
+                <h2>{{ completed_tasks }}</h2>
+
+                <p>Completed</p>
+            </div>
+
+            <div class="card orange">
+                <i class="fa-solid fa-clock"></i>
+
+                <h2>{{ pending_tasks }}</h2>
+
+                <p>Pending</p>
+            </div>
+
+            <div class="card red">
+                <i class="fa-solid fa-fire"></i>
+
+                <h2>{{ high_priority }}</h2>
+
+                <p>High Priority</p>
+            </div>
+
+        </div>
+
+        <!-- Search -->
+        <div class="search-box">
+
+            <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search Tasks...">
+
+        </div>
+
+        
+
+        <!-- Task Table -->
+        <div class="table-container">
+
+            <table id="taskTable">
+
+                <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Title</th>
+
+                    <th>Description</th>
+
+                    <th>Priority</th>
+
+                    <th>Status</th>
+
+                    <th>Due Date</th>
+
+                    <th>Actions</th>
+
+                </tr>
+
+                </thead>
+
+                <tbody>
+
+                {% for task in tasks %}
+
+                <tr>
+
+                    <td>{{ task[0] }}</td>
+
+                    <td>{{ task[1] }}</td>
+
+                    <td>{{ task[2] }}</td>
+
+                    <td>
+
+                        {% if task[3] == "High" %}
+
+                        <span class="priority high">
+                            {{ task[3] }}
+                        </span>
+
+                        {% elif task[3] == "Medium" %}
+
+                        <span class="priority medium">
+                            {{ task[3] }}
+                        </span>
+
+                        {% else %}
+
+                        <span class="priority low">
+                            {{ task[3] }}
+                        </span>
+
+                        {% endif %}
+
+                    </td>
+
+                    <td>
+
+                        {% if task[4] == "Completed" %}
+
+                        <span class="status completed">
+                            {{ task[4] }}
+                        </span>
+
+                        {% elif task[4] == "Pending" %}
+
+                        <span class="status pending">
+                            {{ task[4] }}
+                        </span>
+
+                        {% else %}
+
+                        <span class="status progress">
+                            {{ task[4] }}
+                        </span>
+
+                        {% endif %}
+
+                    </td>
+
+                    <td>{{ task[5] }}</td>
+
+                    <td>
+
+                        <a href="/edit/{{ task[0] }}" class="edit-btn">
+                            <i class="fa-solid fa-pen"></i>
+                        </a>
+
+                        <a href="/complete/{{ task[0] }}" class="complete-btn">
+                            <i class="fa-solid fa-check"></i>
+                        </a>
+
+                        <a href="/delete/{{ task[0] }}"
+                           class="delete-btn"
+                           onclick="return confirm('Delete this task?');">
+
+                            <i class="fa-solid fa-trash"></i>
+
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </main>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+</html>
