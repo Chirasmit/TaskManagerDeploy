@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, session, flash
 import mysql.connector
+import os
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "taskmanager123")
