@@ -6,11 +6,6 @@ app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "taskmanager123")
 
 
-print("HOST:", repr(os.getenv("MYSQLHOST")))
-print("PORT:", repr(os.getenv("MYSQLPORT")))
-print("USER:", repr(os.getenv("MYSQLUSER")))
-print("DATABASE:", repr(os.getenv("MYSQLDATABASE")))
-
 db = mysql.connector.connect(
     host=os.getenv("MYSQLHOST"),
     user=os.getenv("MYSQLUSER"),
@@ -18,7 +13,6 @@ db = mysql.connector.connect(
     database=os.getenv("MYSQLDATABASE"),
     port=int(os.getenv("MYSQLPORT"))
 )
-
 cursor = db.cursor()
 
 
