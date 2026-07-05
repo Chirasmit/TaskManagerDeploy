@@ -7,11 +7,13 @@ app.secret_key = "taskmanager123"
 
 
 db = mysql.connector.connect(
-    host=os.environ.get("DB_HOST"),
-    user=os.environ.get("DB_USER"),
-    password=os.environ.get("DB_PASSWORD"),
-    database=os.environ.get("DB_NAME")
+    host="sql.freedb.tech",
+    user="u_mHB3Je",
+    password="IEDhFxJAA2AN",
+    database="freedb_RqvgRyxv",
+    port=3306
 )
+cursor = db.cursor()
 
 cursor = db.cursor()
 
