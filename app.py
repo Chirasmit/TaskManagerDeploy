@@ -3,16 +3,19 @@ import mysql.connector
 import os
 
 app = Flask(__name__)
-app.secret_key = os.environ.get("SECRET_KEY", "taskmanager123")
+app.secret_key = "taskmanager123"
 
 
 db = mysql.connector.connect(
-    host=os.getenv("MYSQLHOST"),
-    user=os.getenv("MYSQLUSER"),
-    password=os.getenv("MYSQLPASSWORD"),
-    database=os.getenv("MYSQLDATABASE"),
-    port=int(os.getenv("MYSQLPORT")),
+    host=os.environ.get("DB_HOST"),
+    user=os.environ.get("DB_USER"),
+    password=os.environ.get("DB_PASSWORD"),
+    database=os.environ.get("DB_NAME")
 )
+
+cursor = db.cursor()
+
+app.secret_key = os.environ.get("SECRET_KEY")
 
 
 @app.route("/")
